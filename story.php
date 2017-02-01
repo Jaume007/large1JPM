@@ -5,6 +5,7 @@ if(isset($_REQUEST['like'])) addLike($id);
 $story=searchStory($id);?>
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
