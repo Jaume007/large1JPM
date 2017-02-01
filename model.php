@@ -100,14 +100,28 @@ function getContributions($title){
     }
     return $contributions;
 }
-function printContributions($contributions){
+function printContributions($contributions,$id){
     foreach ($contributions as $contribution) {
         $html='<div style="width: 40%; float: left; margin-top: 50px;"><p>'.$contribution['text'].'</p></div>';
         $html.='<div style="width: 20%;margin-left: 10%;float: left;margin-top: 50px;"><ul><li>Likes: '.$contribution['likes'].'</li>';
         $html.='<li>Author: '.$contribution['user'].'</li>';
         $html.='<li>Date: '.$contribution['date'].'</li></ul>';
-        $html.='<form><button formaction="controller.php?page=adlike&id='.$contribution['id'].'">Like</button></form></div>';
+        $html.='<form><button formaction="controller.php?page=adlike&id='.$contribution['id'].'&story='.$id.'">Like</button></form></div>';
         echo $html;
     }
 
+}
+function sumLike($id,$story){
+    $title=searchStory($story);
+    $file=file("./files/".$title.".txt");
+    $outputFile="";
+    foreach ($file as $contribution){
+        $contribution=explode("|",$contribution);
+        if($contribution[4]==$id)$contribution[0]++;
+        $outputFile.=$file.=PHP_EOL.''.$contribution[0].'|'.$contribution[1].'|'.$contribution[2].'|'.$contribution[3].'|'.$contribution[4];
+    }
+    $outputFile=trim($outputFile);
+    $file=fopen("./files/".$title.".txt","w+");
+    fwrite($file,$outputFile);
+    fclose($file);
 }

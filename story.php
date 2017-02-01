@@ -16,6 +16,6 @@ $story=searchStory($id);?>
 <body>
 <h1><?php echo $story['title'];?></h1>
 <p>Likes: <?php echo $story['likes']; ?>          <a href="story.php?like=1&id=<?php echo $id ?>">Add a like!</a></p>
-<?php printContributions(getContributions($story['title']));?>
+<?php printContributions(getContributions($story['title']),$id);?>
 </body>
 </html>

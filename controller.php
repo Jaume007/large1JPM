@@ -29,6 +29,7 @@ function newStory(){
 }
 function adLike(){
     $id=$_REQUEST['id'];
-    sumLike($id);
-    echo '<script>window.location.replace("story.php?error=true");</script>';
+    $story=$_REQUEST['story'];
+    sumLike($id,$story);
+    echo '<script>window.location.replace("story.php?id='.$story.'");</script>';
 }
