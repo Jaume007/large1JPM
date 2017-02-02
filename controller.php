@@ -10,16 +10,19 @@ switch ($page){
     case 'newStory': newStory();
         break;
     case 'adlike':adLike();
+        break;
+    case 'addCon': adCon();
+        break;
 }
 function index(){
     $res=login($_REQUEST['user'],$_REQUEST['pwd']);
-   if($res) echo '<script>window.location.replace("welcome.php");</script>';
-    else echo '<script>window.location.replace("index.php?error=true");</script>';
+   if($res) header('Location: welcome.php');
+    else header('Location: index.php?error=true');
 }
 function register(){
     $res=registerUser($_REQUEST['user'],$_REQUEST['pwd'],$_REQUEST['name']);
-    if($res) echo '<script>window.location.replace("index.php?reg=true");</script>';
-    else echo '<script>window.location.replace("register.php?error=true");</script>';
+    if($res) header('Location: index.php?reg=true');
+    else  header('Location: register.php?error=true');
 }
 function newStory(){
     sanitize($_REQUEST);
@@ -31,6 +34,15 @@ function adLike(){
     $id=$_REQUEST['id'];
     $story=$_REQUEST['story'];
     sumLike($id,$story);
-    header("Location: story.php?id=".$story);
+    header('Location: story.php?id='.$story);
 
+}
+function addCon(){
+    $id=$_REQUEST['id'];
+    $end=$_REQUEST['end'];
+    $contribution=$_REQUEST['contribution'];
+    $story=searchStory($id);
+    addContribution($story['title'],$contribution,$_SESSION['user']);
+    if($end) setStatus(2,$id);
+    else setStatus(0,$id);
 }

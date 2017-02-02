@@ -106,7 +106,7 @@ function printContributions($contributions,$id){
         $html.='<div style="width: 20%;margin-left: 10%;float: left;margin-top: 50px;"><ul><li>Likes: '.$contribution['likes'].'</li>';
         $html.='<li>Author: '.$contribution['user'].'</li>';
         $html.='<li>Date: '.$contribution['date'].'</li></ul>';
-        $html.='<a href=controller.php?page=adlike&id='.$contribution['id'].'&story='.$id.'"> Like</a></div>';
+        $html.='<a href=controller.php?page=adlike&id='.$contribution["id"].'&story='.$id.'> Like</a></div>';
         echo $html;
     }
 
@@ -124,4 +124,10 @@ function sumLike($id,$story){
     $file1=fopen("./files/".$title['title'].".txt","w+");
     fwrite($file1,$outputFile);
     fclose($file1);
+}
+function setStatus($stat,$id){
+    $db=new db();
+    $sql="update stories set status='".$stat."' WHERE id='".$id."'";
+    $res=$db->insUpDel($sql);
+    return $res;
 }
