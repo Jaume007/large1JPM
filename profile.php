@@ -28,7 +28,9 @@ $user = getUser($_SESSION['user']);
     <input type="text" name="username" id="username" required/>
     <input type="submit" value="Change Username"/>
 </form>
-
+<form>
+    <button formaction="welcome.php">Back</button>
+</form>
 
 </body>
 </html>

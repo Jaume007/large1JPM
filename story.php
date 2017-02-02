@@ -17,20 +17,27 @@ $story=searchStory($id);?>
 <h1><?php echo $story['title'];?></h1>
 <p>Likes: <?php echo $story['likes']; ?>          <a href="story.php?like=1&id=<?php echo $id ?>">Add a like!</a></p>
 <?php printContributions(getContributions($story['title']),$id);?>
-<?php if ($story['status'==0]) {
+<?php if ($story['status']==0) {
     setStatus(1,$story['id']);
-    $html='<form> <label for="contribution">Write the new contribution:(max 140 characters)</label><br/><br/>
+    $html='<div style="float: left;margin-top: 30px; margin-right: 80%;"> <form action="controller.php" method="get"> <label for="contribution">Write the new contribution:(max 140 characters)</label><br/><br/>
     <textarea maxlength="140" id="contribution" name="contribution"></textarea><br/><br/>
     <label for="end">Finished?</label>
     <input type="checkbox" id="end" name="end"/>
     <input type="hidden" name="id" value='.$story['id'].'>
     <input type="hidden" name="page" value="addCon"/>
-    <input type="submit" value="Add Contribution"></form>';
+    <input type="submit" value="Add Contribution"></form></div>
+    <div style="float: left;margin-top: 30px;"><p><a href="controller.php?page=cancel&id='.$story['id'].'">Cancel Edition</a></p></div>';
     echo $html;
 }else if($story['status']==2){
-    echo '<h3> The end</h3>';
+    echo '<div style="float: left;margin-top: 30px; margin-left: 30%"><h3> The end</h3>
+<form>
+    <button formaction="welcome.php">Back</button>
+</form></div>';
+}else {echo '<div style="float: left;margin-top: 30px; margin-left: 30%">
+<form>
+    <button formaction="welcome.php">Back</button>
+</form></div>';
 }
-echo '<a href="controller.php?page=cancel&id='.$story['id'].'>Cancel Edition</a>';
 ?>
 
 </body>

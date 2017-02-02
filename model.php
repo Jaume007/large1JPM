@@ -70,6 +70,7 @@ function createStory($title){
     return $res;
 }
 function addContribution($title,$contribution,$user){
+    $contribution=trim($contribution);
     $db=new db();
     $id=searchId($title);
     $sql="insert into contributions(FK_Story,FK_User) values ('".$id."','".$user."')";
@@ -79,7 +80,9 @@ function addContribution($title,$contribution,$user){
     $idC=mysqli_fetch_assoc($idC);
     $idC=$idC['idC'];
     $file=file_get_contents("./files/".$title.".txt");
-    $file.=PHP_EOL.'0|'.$user.'|'.date("j, n, Y").'|'.$contribution.'|'.$idC;
+    $contribution='0|'.$user.'|'.date("j, n, Y").'|'.$contribution.'|'.$idC;
+    $contribution=trim($contribution);
+    $file.=PHP_EOL.$contribution;
     $file=trim($file);
     $fil=fopen("./files/".$title.".txt","w");
     fwrite($fil,$file);
@@ -103,10 +106,10 @@ function getContributions($title){
 function printContributions($contributions,$id){
     foreach ($contributions as $contribution) {
         $html='<div style="width: 40%; float: left; margin-top: 50px;"><p>'.$contribution['text'].'</p></div>';
-        $html.='<div style="width: 20%;margin-left: 10%;float: left;margin-top: 50px;"><ul><li>Likes: '.$contribution['likes'].'</li>';
+        $html.='<div style="width: 20%;margin-left: 20%;float: left;margin-top: 50px;"><ul><li>Likes: '.$contribution['likes'].'</li>';
         $html.='<li>Author: '.$contribution['user'].'</li>';
         $html.='<li>Date: '.$contribution['date'].'</li></ul>';
-        $html.='<a href=controller.php?page=adlike&id='.$contribution["id"].'&story='.$id.'> Like</a></div>';
+        $html.='<a href="controller.php?page=adlike&id='.$contribution['id'].'&story='.$id.'"> Like</a></div>';
         echo $html;
     }
 
@@ -117,8 +120,8 @@ function sumLike($id,$story){
     $outputFile="";
     foreach ($file as $contribution){
         $contribution=explode("|",$contribution);
-        if($contribution[4]==$id)$contribution[0]++;
-        $outputFile.=PHP_EOL.''.$contribution[0].'|'.$contribution[1].'|'.$contribution[2].'|'.$contribution[3].'|'.$contribution[4];
+        if(trim($contribution[4])==$id){$contribution[0]++;}
+        $outputFile.=$contribution[0].'|'.$contribution[1].'|'.$contribution[2].'|'.$contribution[3].'|'.$contribution[4];
     }
     $outputFile=trim($outputFile);
     $file1=fopen("./files/".$title['title'].".txt","w+");

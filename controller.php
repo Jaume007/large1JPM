@@ -34,9 +34,11 @@ function newStory(){
 }
 function adLike(){
     $id=$_REQUEST['id'];
-    $story=$_REQUEST['story'];
-    sumLike($id,$story);
-    header('Location: story.php?id='.$story);
+    $storyID=$_REQUEST['story'];
+    sumLike($id,$storyID);
+    $story=searchStory($storyID);
+    if($story['status']==1) setStatus(0,$storyID);
+    header('Location: story.php?id='.$storyID);
 
 }
 function addCon(){
@@ -47,4 +49,5 @@ function addCon(){
     addContribution($story['title'],$contribution,$_SESSION['user']);
     if($end) setStatus(2,$id);
     else setStatus(0,$id);
+    header('Location: story.php?id='.$id);
 }
