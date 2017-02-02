@@ -11,7 +11,9 @@ switch ($page){
         break;
     case 'adlike':adLike();
         break;
-    case 'addCon': adCon();
+    case 'addCon': addCon();
+        break;
+    case 'cancel': setStatus(0,$_REQUEST['id']);header('Location: welcome.php');
         break;
 }
 function index(){

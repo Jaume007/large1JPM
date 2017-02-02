@@ -30,8 +30,8 @@ $story=searchStory($id);?>
 }else if($story['status']==2){
     echo '<h3> The end</h3>';
 }
+echo '<a href="controller.php?page=cancel&id='.$story['id'].'>Cancel Edition</a>';
+?>
 
-
-    ?>
 </body>
 </html>
