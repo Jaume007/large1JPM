@@ -1,7 +1,11 @@
 <?PHP include_once "init.php";
 include_once "model.php";
 $id=$_REQUEST['id'];
-if(isset($_REQUEST['like'])) addLike($id);
+if(isset($_REQUEST['like'])) {
+    addLike($id);
+    $story=searchStory($id);
+    if($story['status']==1) setStatus(0,$story['id']);
+}
 $story=searchStory($id);?>
 <!doctype html>
 <html lang="en">
