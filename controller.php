@@ -9,7 +9,7 @@ switch ($page){
         break;
     case 'newStory': newStory();
         break;
-    case 'adLike':adLike();
+    case 'adlike':adLike();
 }
 function index(){
     $res=login($_REQUEST['user'],$_REQUEST['pwd']);
@@ -31,5 +31,6 @@ function adLike(){
     $id=$_REQUEST['id'];
     $story=$_REQUEST['story'];
     sumLike($id,$story);
-    echo '<script>window.location.replace("story.php?id='.$story.'");</script>';
+    header("Location: story.php?id=".$story);
+
 }
